@@ -1,15 +1,16 @@
 // import logo from "./logo.svg";
-import {TonConnectButton, TonConnectUIProvider } from "@tonconnect/ui-react";
+import { TonConnectUIProvider } from "@tonconnect/ui-react";
 import "./App.css";
+import Header from './components/Header';
 
 function App() {
   return (
     <TonConnectUIProvider manifestUrl="https://ton-connect.github.io/demo-dapp-with-react-ui/tonconnect-manifest.json">
     <div className="App">
-      <header className="App-header">
-        <span>My App with React UI</span>
-        <TonConnectButton />
-      </header>
+     <Header />
+     <main>
+      Home page
+     </main>
     </div>
     </TonConnectUIProvider>
   );
