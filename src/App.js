@@ -1,7 +1,7 @@
 // import logo from "./logo.svg";
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
 import "./App.css";
-import Header from './components/Header';
+import Header from './components/Header/Header';
 
 function App() {
   return (
