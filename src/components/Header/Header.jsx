@@ -1,5 +1,6 @@
 import React from "react";
 import { TonConnectButton } from "@tonconnect/ui-react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -7,13 +8,13 @@ const Header = () => {
       <nav class="flex items-center justify-end h-16">
         <ul className="flex w-1/4 justify-around space-x-12 items-center">
           <li>
-            <a href="/">Home</a>
+            <Link to="/">Home</Link>
           </li>
           <li>
-            <a href="/about">About</a>
+            <Link to="/sale">Sale</Link>
           </li>
           <li>
-            <a href="/contact">Contact</a>
+            <Link to="/contact">Contact</Link>
           </li>
         </ul>
         <div className="flex justify-center w-1/6">
