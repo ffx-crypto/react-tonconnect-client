@@ -9,7 +9,7 @@ import "./App.css";
 import Header from "./components/Header/Header";
 
 function App() {
-  const manifestUrl = process.env.REACT_APP_MANIFEST_URL;
+  const manifestUrl = import.meta.env.VITE_MANIFEST_URL;
   return (
     <TonConnectUIProvider manifestUrl={manifestUrl}>
       <Router>

@@ -72,7 +72,7 @@ const Sale = () => {
         messages: [
           {
             // The receiver's address.
-            address: process.env.REACT_APP_MINTER_ADMIN_ADDRESS,
+            address: import.meta.env.VITE_MINTER_ADMIN_ADDRESS,
             // Amount to send in nanoTON. For example, 0.005 TON is 5000000 nanoTON.
             amount: tonAmount, // 0.0005 TON
           },

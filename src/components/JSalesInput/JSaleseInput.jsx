@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
 import {
-  SendTransactionRequest,
   useTonConnectUI,
   useTonWallet,
 } from "@tonconnect/ui-react";
@@ -68,15 +67,15 @@ const JSalesInput = ({ onClick, loading }) => {
   //   messages: [
   //     {
   //       // The receiver's address.
-  //       address: process.env.REACT_APP_MINTER_ADMIN_ADDRESS,
+  //       address: import.meta.env.REACT_APP_MINTER_ADMIN_ADDRESS,
   //       // Amount to send in nanoTON. For example, 0.005 TON is 5000000 nanoTON.
   //       amount: amount, // 0.0005 TON
   //     },
   //   ],
   // };
   const [price, setPrice] = useState("");
-  const minterAdminAddr = process.env.REACT_APP_MINTER_ADMIN_ADDRESS;
-  const jettonPrice = process.env.REACT_APP_JETTON_PRICE;
+  const minterAdminAddr = import.meta.env.VITE_MINTER_ADMIN_ADDRESS;
+  const jettonPrice = import.meta.env.VITE_JETTON_PRICE;
 
   // const [tx, setTx] = useState(defaultTx);
   const [finalizedTx, setFinalizedTx] = useState(null);
