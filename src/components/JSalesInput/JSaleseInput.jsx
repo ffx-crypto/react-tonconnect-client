@@ -1,18 +1,106 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
+import {
+  SendTransactionRequest,
+  useTonConnectUI,
+  useTonWallet,
+} from "@tonconnect/ui-react";
+// import {
+//   Address,
+//   beginCell,
+//   Cell,
+//   loadMessage,
+//   storeMessage,
+//   Transaction,
+// } from "@ton/core";
+// import { useTonClient } from "../../hooks/useTonClient";
+import { TonClient } from "@ton/ton";
+import { toNano } from "@ton/core";
 
-const JSalesInput = () => {
+// const waitForTransaction = async (options, client) => {
+//   const { hash, refetchInterval = 1000, refetchLimit, address } = options;
+
+//   return new Promise((resolve) => {
+//     let refetches = 0;
+//     const walletAddress = Address.parse(address);
+//     const interval = setInterval(async () => {
+//       refetches += 1;
+
+//       console.log("waiting transaction...");
+//       const state = await client.getContractState(walletAddress);
+//       if (!state || !state.lastTransaction) {
+//         clearInterval(interval);
+//         resolve(null);
+//         return;
+//       }
+//       const lastLt = state.lastTransaction.lt;
+//       const lastHash = state.lastTransaction.hash;
+//       const lastTx = await client.getTransaction(
+//         walletAddress,
+//         lastLt,
+//         lastHash
+//       );
+
+//       if (lastTx && lastTx.inMessage) {
+//         const msgCell = beginCell()
+//           .store(storeMessage(lastTx.inMessage))
+//           .endCell();
+
+//         const inMsgHash = msgCell.hash().toString("base64");
+//         console.log("InMsgHash", inMsgHash);
+//         if (inMsgHash === hash) {
+//           clearInterval(interval);
+//           resolve(lastTx);
+//         }
+//       }
+//       if (refetchLimit && refetches >= refetchLimit) {
+//         clearInterval(interval);
+//         resolve(null);
+//       }
+//     }, refetchInterval);
+//   });
+// };
+
+const JSalesInput = ({ onClick, loading }) => {
   const [amount, setAmount] = useState(0);
-  const [price, setPrice] = useState(0);
+  // const defaultTx = {
+  //   // The transaction is valid for 10 minutes from now, in unix epoch seconds.
+  //   validUntil: Math.floor(Date.now() / 1000) + 600,
+  //   messages: [
+  //     {
+  //       // The receiver's address.
+  //       address: process.env.REACT_APP_MINTER_ADMIN_ADDRESS,
+  //       // Amount to send in nanoTON. For example, 0.005 TON is 5000000 nanoTON.
+  //       amount: amount, // 0.0005 TON
+  //     },
+  //   ],
+  // };
+  const [price, setPrice] = useState("");
   const minterAdminAddr = process.env.REACT_APP_MINTER_ADMIN_ADDRESS;
   const jettonPrice = process.env.REACT_APP_JETTON_PRICE;
 
-  const handleSubmit = () => {
+  // const [tx, setTx] = useState(defaultTx);
+  const [finalizedTx, setFinalizedTx] = useState(null);
+  // const [msgHash, setMsgHash] = useState("");
+  // const [loading, setLoading] = useState(false);
+  // const { client } = useTonClient();
+
+  const wallet = useTonWallet();
+
+  const [tonConnectUi] = useTonConnectUI();
+
+  // const onChange = useCallback((value) => {
+  //   setTx(value.updated_src);
+  // }, []);
+
+  const handleSubmit = async () => {
+    await onClick(toNano(price));
     console.log("handleSubmit amount", amount);
   };
 
   useEffect(() => {
     const totalPrice = amount * jettonPrice;
     setPrice(parseFloat(totalPrice.toFixed(3)));
+    console.log('price ', price);
   }, [amount]);
 
   return (
@@ -51,9 +139,16 @@ const JSalesInput = () => {
       {/* Send Button */}
       <button
         onClick={handleSubmit}
+        disabled={loading}
         className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
       >
-        Send <span className="text-bold text-yellow-400">{price}</span> Ton
+        {loading ? (
+          <>Loading ...</>
+        ) : (
+          <>
+            Send <span className="text-bold text-yellow-400">{price}</span> Ton
+          </>
+        )}
       </button>
     </div>
   );

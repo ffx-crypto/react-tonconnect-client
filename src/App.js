@@ -1,4 +1,5 @@
 // import logo from "./logo.svg";
+import './polyfill';
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
