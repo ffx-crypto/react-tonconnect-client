@@ -109,6 +109,39 @@ export default function JSalesInput() {
     setTx(value.updated_src);
   }, []);
 
+  const handleSendTons = async () => {
+            
+    try {
+      const result = await tonConnectUi.sendTransaction(tx);
+      setLoading(true);
+      const hash = Cell.fromBase64(result.boc)
+        .hash()
+        .toString("base64");
+
+      const message = loadMessage(
+        Cell.fromBase64(result.boc).asSlice()
+      );
+      console.log('hash ', hash);
+      console.log("Message:", message.body.hash().toString("hex"));
+      setMsgHash(hash);
+      console.log('address ', tonConnectUi.account?.address);
+      if (client) {
+        const txFinalized = await waitForTransaction(
+          {
+            address: tonConnectUi.account?.address ?? "",
+            hash: hash,
+          },
+          client
+        );
+        setFinalizedTx(txFinalized);
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="send-tx-form">
       <h3>Configure and send transaction</h3>
@@ -118,38 +151,7 @@ export default function JSalesInput() {
       {wallet ? (
         <button
           disabled={loading}
-          onClick={async () => {
-            
-            try {
-              const result = await tonConnectUi.sendTransaction(tx);
-              setLoading(true);
-              const hash = Cell.fromBase64(result.boc)
-                .hash()
-                .toString("base64");
-
-              const message = loadMessage(
-                Cell.fromBase64(result.boc).asSlice()
-              );
-              console.log('hash ', hash);
-              console.log("Message:", message.body.hash().toString("hex"));
-              setMsgHash(hash);
-              console.log('address ', tonConnectUi.account?.address);
-              if (client) {
-                const txFinalized = await waitForTransaction(
-                  {
-                    address: tonConnectUi.account?.address ?? "",
-                    hash: hash,
-                  },
-                  client
-                );
-                setFinalizedTx(txFinalized);
-              }
-            } catch (e) {
-              console.error(e);
-            } finally {
-              setLoading(false);
-            }
-          }}
+          onClick={handleSendTons}
         >
           {loading ? "Loading..." : "Send transaction"}
         </button>
