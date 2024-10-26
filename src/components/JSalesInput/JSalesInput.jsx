@@ -8,6 +8,7 @@ export default function JSalesInput() {
   const [jettonAmount, setJettonAmount] = useState(0);
   const [jettonPrice, setJettonPrice] = useState(0);
   const [btnDisabled, setBtnDisabled] = useState(true);
+  const [comment, setComment] = useState("");
   const { sendTons, loading, msgHash, finalizedTx } = useTonTransaction();
   const { client } = useTonClient();
   const oneJettonPrice = import.meta.env.VITE_JETTON_PRICE;
@@ -17,14 +18,22 @@ export default function JSalesInput() {
   useEffect(() => {
     const totalPrice = jettonAmount * oneJettonPrice;
     setJettonPrice(parseFloat(totalPrice.toFixed(3)).toString());
-    // btnDisabled = jettonAmount > 0;
-    setBtnDisabled(jettonAmount == 0);
-  }, [jettonAmount]);
+    const isBtnDisabled = jettonAmount == 0 || comment.length > 232;
+    setBtnDisabled(isBtnDisabled);
+  }, [jettonAmount, comment]);
 
   const handleSendTons = async () => {
     await sendTons(jettonPrice, client);
     setJettonAmount(0);
-  }
+  };
+
+  const handleTextAreaChange = (e) => {
+    if (e.target.value.length <= 232) {
+      setComment(e.target.value);
+    } else {
+      setBtnDisabled(true);
+    }
+  };
 
   return (
     <div className="max-w-sm mx-auto bg-white rounded-lg shadow-lg p-6">
@@ -61,7 +70,11 @@ export default function JSalesInput() {
         <button
           disabled={loading || btnDisabled}
           onClick={handleSendTons}
-          className={`w-full  text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${btnDisabled ? "bg-blue-300 hover:bg-blue-300" : "bg-blue-500 hover:bg-blue-700"}`}
+          className={`w-full  text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
+            btnDisabled
+              ? "bg-blue-300 hover:bg-blue-300"
+              : "bg-blue-500 hover:bg-blue-700"
+          }`}
         >
           {loading ? (
             "Loading..."
@@ -101,7 +114,15 @@ export default function JSalesInput() {
           )}
         </>
       ) : (
-        <></>
+        <>
+          <textarea
+            value={comment} // Bind the textarea value to state
+            onChange={handleTextAreaChange} // Update state on change
+            rows="4"
+            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400 mt-4"
+            placeholder="Type your message here..."
+          ></textarea>
+        </>
       )}
     </div>
   );
