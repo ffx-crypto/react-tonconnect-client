@@ -9,7 +9,7 @@ import {
   toNano,
 } from "@ton/core";
 import { useTonClient } from "../../hooks/useTonClient";
-import AddressDisplay  from "./AddressDisplay";
+import AddressDisplay from "./AddressDisplay";
 
 // In this example, we are using a predefined smart contract state initialization (`stateInit`)
 // to interact with an "EchoContract". This contract is designed to send the value back to the sender,
@@ -46,7 +46,7 @@ const waitForTransaction = async (options, client) => {
           .endCell();
 
         const inMsgHash = msgCell.hash().toString("base64");
-        console.log("InMsgHash hex", msgCell.hash().toString('hex'));
+        console.log("InMsgHash hex", msgCell.hash().toString("hex"));
         if (inMsgHash === hash) {
           clearInterval(interval);
           resolve(lastTx);
@@ -193,10 +193,18 @@ export default function JSalesInput() {
       )}
       {msgHash ? (
         <>
-          <div className="break-words mt-4"><span className="text-gray-400 font-bold">Sending Tx Message Hash:</span> {msgHash}</div>
+          <div className="mt-4">
+            <p className="text-gray-400 font-bold">Sending Tx Message Hash:</p>
+            <p className="break-words">{msgHash}</p>
+          </div>
           {finalizedTx ? (
             <>
-              <div className="break-words mt-2"><span className="text-gray-400 font-bold">Sending Tx Hash:</span> {finalizedTx?.hash().toString("hex")}</div>
+              <div className="mt-2">
+                <p className="text-gray-400 font-bold">Sending Tx Hash:</p>
+                <p className="break-words">
+                  {finalizedTx?.hash().toString("hex")}
+                </p>
+              </div>
             </>
           ) : (
             <></>
