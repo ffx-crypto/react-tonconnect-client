@@ -9,6 +9,7 @@ import {
   toNano,
 } from "@ton/core";
 import { useTonClient } from "../../hooks/useTonClient";
+import AddressDisplay  from "./AddressDisplay";
 
 // In this example, we are using a predefined smart contract state initialization (`stateInit`)
 // to interact with an "EchoContract". This contract is designed to send the value back to the sender,
@@ -144,9 +145,9 @@ export default function JSalesInput() {
           alt="Jetton logo"
           className="w-24 h-24 rounded-full object-cover mb-2"
         />
-        <p className="text-gray-700 text-lg font-semibold text-center">
-          {minterAdminAddr}
-        </p>
+        <div className="text-gray-700 text-lg font-semibold text-center">
+          <AddressDisplay address={minterAdminAddr} />
+        </div>
       </div>
 
       {/* Input for Jettons */}
