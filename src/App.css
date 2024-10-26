@@ -9,3 +9,7 @@
 .dev-b-green {
   border: 1px solid greenyellow;
 }
+
+.dev-b-red {
+  border: 1px solid red;
+}
