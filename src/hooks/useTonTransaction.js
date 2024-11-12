@@ -1,19 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
-    Address,
-    beginCell,
-    Cell,
-    loadMessage,
-    storeMessage,
-    toNano,
-  } from "@ton/core";
-  import { useTonConnectUI } from "@tonconnect/ui-react";
+  Address,
+  beginCell,
+  Cell,
+  loadMessage,
+  storeMessage,
+  toNano,
+} from "@ton/core";
+import { useTonConnectUI } from "@tonconnect/ui-react";
 
 export const useTonTransaction = () => {
   const [finalizedTx, setFinalizedTx] = useState(null);
   const [msgHash, setMsgHash] = useState("");
   const [loading, setLoading] = useState(false);
   const [tonConnectUi] = useTonConnectUI();
+  const [responseMsg, setResponseMessage] = useState("");
+  const [responseError, setResponseError] = useState("");
 
   const waitForTransaction = async (options, client) => {
     const { hash, refetchInterval = 1000, refetchLimit, address } = options;
@@ -59,7 +61,7 @@ export const useTonTransaction = () => {
     });
   };
 
-  const sendTons = async (tonAmount, client) => {
+  const sendTons = async (tonAmount, client, comment) => {
     const tx = {
       validUntil: Math.floor(Date.now() / 1000) + 600,
       messages: [
@@ -68,8 +70,8 @@ export const useTonTransaction = () => {
           amount: toNano(tonAmount).toString(),
         },
       ],
-    };
-    try {
+    }; 
+    try { 
       const result = await tonConnectUi.sendTransaction(tx);
       setLoading(true);
       const hash = Cell.fromBase64(result.boc).hash().toString("base64");
@@ -88,9 +90,10 @@ export const useTonTransaction = () => {
             hash: hash,
           },
           client
-        );
+        ); 
         if (txFinalized) {
-            setFinalizedTx(txFinalized);
+          setFinalizedTx(txFinalized); 
+        await sendTxHash(hash, comment);
         }
       }
     } catch (e) {
@@ -100,10 +103,40 @@ export const useTonTransaction = () => {
     }
   };
 
+  const sendTxHash = async (hash, comment) => {
+    const api_url = import.meta.env.VITE_API_BASE_URL;
+
+    try {
+      const response = await fetch(`${api_url}/transaction`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ msgHash: hash, comment: comment }),
+      });
+
+      if (response.status === 404) {
+        setResponseError("Transaction not found");
+      } else if (response.status === 500) {
+        setResponseError("Server error. Contact administrator.");
+      } else if (response.ok) {
+        const data = await response.json();
+        setResponseMessage(data.message); // assuming { message: 'Transaction successful' }
+      } else {
+        setResponseError("Unexpected error occurred");
+      }
+    } catch (error) {
+      setResponseError("Failed to connect to the server");
+      console.error("Request error:", error);
+    }
+  };
+
   return {
     sendTons,
     loading,
     msgHash,
     finalizedTx,
+    responseMsg,
+    responseError
   };
 };
