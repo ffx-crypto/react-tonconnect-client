@@ -9,7 +9,7 @@ export default function JSalesInput() {
   const [jettonPrice, setJettonPrice] = useState(0);
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [comment, setComment] = useState("");
-  const { sendTons, loading, msgHash, finalizedTx,sendTxHash, responseMsg, responseError } = useTonTransaction();
+  const { sendTons, loading, msgHash, finalizedTx, responseMsg, responseError } = useTonTransaction();
   const { client } = useTonClient();
   const oneJettonPrice = import.meta.env.VITE_JETTON_PRICE;
   const minterAdminAddr = import.meta.env.VITE_MINTER_ADMIN_ADDRESS;
