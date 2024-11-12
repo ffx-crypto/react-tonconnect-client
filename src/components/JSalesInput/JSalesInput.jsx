@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useTonWallet } from "@tonconnect/ui-react";
+import { useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
 import { useTonClient } from "../../hooks/useTonClient";
 import AddressDisplay from "./AddressDisplay";
 import { useTonTransaction } from "../../hooks/useTonTransaction";
@@ -14,6 +14,7 @@ export default function JSalesInput() {
   const oneJettonPrice = import.meta.env.VITE_JETTON_PRICE;
   const minterAdminAddr = import.meta.env.VITE_MINTER_ADMIN_ADDRESS;
   const wallet = useTonWallet();
+  const [tonConnectUi] = useTonConnectUI();
 
   useEffect(() => {
     const totalPrice = jettonAmount * oneJettonPrice;
