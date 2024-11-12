@@ -9,7 +9,7 @@ export default function JSalesInput() {
   const [jettonPrice, setJettonPrice] = useState(0);
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [comment, setComment] = useState("");
-  const { sendTons, loading, msgHash, finalizedTx } = useTonTransaction();
+  const { sendTons, loading, msgHash, finalizedTx,sendTxHash, responseMsg, responseError } = useTonTransaction();
   const { client } = useTonClient();
   const oneJettonPrice = import.meta.env.VITE_JETTON_PRICE;
   const minterAdminAddr = import.meta.env.VITE_MINTER_ADMIN_ADDRESS;
@@ -23,7 +23,7 @@ export default function JSalesInput() {
   }, [jettonAmount, comment]);
 
   const handleSendTons = async () => {
-    await sendTons(jettonPrice, client);
+    await sendTons(jettonPrice, client, comment);
     setJettonAmount(0);
   };
 
@@ -44,6 +44,9 @@ export default function JSalesInput() {
           alt="Jetton logo"
           className="w-24 h-24 rounded-full object-cover mb-2"
         />
+        <span className="text-sm text-gray-400 font-semibold">
+          Minter address:
+        </span>
         <div className="text-gray-700 text-lg font-semibold text-center">
           <AddressDisplay address={minterAdminAddr} />
         </div>
@@ -66,6 +69,7 @@ export default function JSalesInput() {
         />
       </div>
 
+      {/* SEND | CONNECT BUTTON */}
       {wallet ? (
         <button
           disabled={loading || btnDisabled}
@@ -94,6 +98,8 @@ export default function JSalesInput() {
           Connect wallet to send the transaction
         </button>
       )}
+
+      {/* MESSAGE HASH | TEXTAREA */}
       {msgHash ? (
         <>
           <div className="mt-4">
@@ -123,6 +129,22 @@ export default function JSalesInput() {
             placeholder="Type your message here..."
           ></textarea>
         </>
+      )}
+
+      {/* RESULT | ERROR MESSAGE */}
+      {responseMsg ? (
+        <div className="mt-4 border-l-4 border-blue-600 text-center text-blue-700 font-mono">
+          {responseMsg}
+        </div>
+      ) : (
+        <></>
+      )}
+      {responseError ? (
+        <div className="mt-4 border-l-4 border-rose-500 text-center text-rose-600 font-mono">
+          {responseError}
+        </div>
+      ) : (
+        <></>
       )}
     </div>
   );
