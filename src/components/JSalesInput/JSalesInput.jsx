@@ -9,7 +9,16 @@ export default function JSalesInput() {
   const [jettonPrice, setJettonPrice] = useState(0);
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [comment, setComment] = useState("");
-  const { sendTons, loading, msgHash, finalizedTx, responseMsg, responseError } = useTonTransaction();
+  const {
+    sendTons,
+    loading,
+    msgHash,
+    finalizedTx,
+    responseMsg,
+    responseError,
+    setResponseError,
+    setResponseMessage,
+  } = useTonTransaction();
   const { client } = useTonClient();
   const oneJettonPrice = import.meta.env.VITE_JETTON_PRICE;
   const minterAdminAddr = import.meta.env.VITE_MINTER_ADMIN_ADDRESS;
@@ -22,6 +31,13 @@ export default function JSalesInput() {
     const isBtnDisabled = jettonAmount == 0 || comment.length > 232;
     setBtnDisabled(isBtnDisabled);
   }, [jettonAmount, comment]);
+
+  useEffect(() => {
+    setComment("");
+    setJettonAmount(0);
+    setResponseMessage("");
+    setResponseError("");
+  }, [wallet]);
 
   const handleSendTons = async () => {
     await sendTons(jettonPrice, client, comment);
