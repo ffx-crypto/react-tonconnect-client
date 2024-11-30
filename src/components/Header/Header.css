@@ -1,0 +1,23 @@
+.menu {
+    width: 100%;
+    transition: all 1s ease-out;
+}
+.menu-opened {
+    position: absolute;
+    visibility: visible;
+    /* opacity: 1; */
+    transform: translateY(0);
+}
+
+.menu-closed {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    transform: translateY(-100%);
+}
+
+.menu-opened .burger-menu  {
+    visibility: visible;
+    border: 1px solid red;
+    opacity: 1;
+}
