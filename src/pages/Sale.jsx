@@ -33,6 +33,7 @@ const Sale = () => {
         </p>
       </div>
       <JSalesInput />
+      <div className="mb-8"></div>
     </div>
   );
 };

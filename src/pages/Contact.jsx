@@ -31,7 +31,7 @@ const Contact = () => {
             href="https://t.me/ffx_on_ton"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-600 hover:text-blue-500 flex"
+            className="text-blue-600 hover:text-blue-500 flex"
           >
             <FaTelegram size={32} /><b className="pb-2 px-2">Telegram</b>
           </a>
@@ -41,7 +41,7 @@ const Contact = () => {
             href="https://github.com/acdmft/react-tonconnect-app"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-600 hover:text-blue-500 flex"
+            className="text-blue-600 hover:text-blue-500 flex"
           >
             <FaGithub size={32} /><b className="pb-2 px-2">Github</b>
           </a>
