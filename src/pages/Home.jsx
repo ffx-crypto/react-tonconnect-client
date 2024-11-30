@@ -1,6 +1,12 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+  const handleRedirect= () => {
+    navigate("/sale");
+  }
+
   return (
     <div className="container mx-auto p-4 lg:w-1/2 md:w-2/3 sm:w-full">
       <div className="my-6 space-y-4">
@@ -81,7 +87,7 @@ const Home = () => {
         </p>
       </div>
       <div className="flex justify-center">
-        <button className="w-content bg-blue-500 hover:bg-blue-700 text-xl sm:text-2xl text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Try now</button>
+        <button onClick={handleRedirect} className="w-content bg-blue-500 hover:bg-blue-700 text-xl sm:text-2xl text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Try now</button>
       </div>
       <div className="h-24"></div>
     </div>
