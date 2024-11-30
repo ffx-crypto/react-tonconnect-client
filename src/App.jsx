@@ -6,6 +6,7 @@ import Sale from "./pages/Sale";
 import Contact from "./pages/Contact";
 import "./App.css";
 import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const manifestUrl = import.meta.env.VITE_MANIFEST_URL;
@@ -133,13 +134,14 @@ function App() {
       <Router>
         <div className="App">
           <Header />
-          <main>
+          <main className="min-h-screen">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/sale" element={<Sale />} />
               <Route path="/contact" element={<Contact />} />
             </Routes>
           </main>
+          <Footer />
         </div>
       </Router>
     </TonConnectUIProvider>
