@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { TonConnectButton } from "@tonconnect/ui-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import "./Header.css";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+
   return (
     <header className="bg-white shadow-md">
       <nav className="flex items-center justify-between h-16 px-4 md:px-8">
@@ -39,13 +41,14 @@ const Header = () => {
           {/* Desktop Navigation */}
           <ul className="hidden md:flex w-1/4 justify-around space-x-8 items-center">
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/" 
+              className={`${location.pathname === "/" ? "underline underline-offset-4": ""}`}>Home</Link>
             </li>
             <li>
-              <Link to="/sale">Sale</Link>
+              <Link to="/sale" className={`${location.pathname === "/sale" ? "underline underline-offset-4": ""}`}>Sale</Link>
             </li>
             <li>
-              <Link to="/contact">Contact</Link>
+              <Link to="/contact" className={`${location.pathname === "/contact" ? "underline underline-offset-4": ""}`}>Contact</Link>
             </li>
           </ul>
         </div>
@@ -54,28 +57,18 @@ const Header = () => {
       {/* Mobile Menu */}
       <div className={`menu ${isMenuOpen ? "menu-opened" : "menu-closed"}`}>
         <ul className="flex flex-col bg-white items-center space-y-4 py-4">
-          {/* <li> */}
-            {/* Close Button */}
-            {/* <button
-              className="absolute top-4 right-4 text-2xl"
-              onClick={() => setIsMenuOpen(false)}
-              aria-label="Close Menu"
-            >
-              <FaTimes />
-            </button>
-          </li> */}
           <li>
-            <Link to="/" onClick={() => setIsMenuOpen(false)}>
+            <Link to="/" onClick={() => setIsMenuOpen(false)} className={`${location.pathname === "/" ? "underline underline-offset-4": ""}`}>
               Home
             </Link>
           </li>
           <li>
-            <Link to="/sale" onClick={() => setIsMenuOpen(false)}>
+            <Link to="/sale" onClick={() => setIsMenuOpen(false)} className={`${location.pathname === "/sale" ? "underline underline-offset-4": ""}`}>
               Sale
             </Link>
           </li>
           <li>
-            <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
+            <Link to="/contact" onClick={() => setIsMenuOpen(false)} className={`${location.pathname === "/contact" ? "underline underline-offset-4": ""}`}>
               Contact
             </Link>
           </li>
