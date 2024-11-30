@@ -1,77 +1,37 @@
 import React, { useState } from "react";
-import { useTonWallet, useTonConnectUI } from "@tonconnect/ui-react";
 import JSalesInput from "../components/JSalesInput/JSalesInput";
-import {
-  Address,
-  beginCell,
-  Cell,
-  loadMessage,
-  storeMessage,
-  Transaction,
-} from "@ton/core";
-import { useTonClient } from "../hooks/useTonClient";
-
-// const waitForTransaction = async (options, client) => {
-//   const { hash, refetchInterval = 5000, refetchLimit, address } = options;
-
-//   return new Promise((resolve) => {
-//     let refetches = 0;
-//     const walletAddress = Address.parse(address);
-//     const interval = setInterval(async () => {
-//       refetches += 1;
-
-//       console.log("waiting transaction...");
-//       const state = await client.getContractState(walletAddress);
-//       if (!state || !state.lastTransaction) {
-//         clearInterval(interval);
-//         resolve(null);
-//         return;
-//       }
-//       const lastLt = state.lastTransaction.lt;
-//       const lastHash = state.lastTransaction.hash;
-//       // console.log('state, lastLt, lastHash ', state, lastLt, lastHash);
-//       const lastTx = await client.getTransaction(
-//         walletAddress,
-//         lastLt,
-//         lastHash
-//       );
-
-//       if (lastTx && lastTx.inMessage) {
-//         const msgCell = beginCell()
-//           .store(storeMessage(lastTx.inMessage))
-//           .endCell();
-
-//         const inMsgHash = msgCell.hash().toString("base64");
-//         console.log("InMsgHash", inMsgHash);
-//         if (inMsgHash === hash) {
-//           clearInterval(interval);
-//           resolve(lastTx);
-//         }
-//       }
-//       if (refetchLimit && refetches >= refetchLimit) {
-//         clearInterval(interval);
-//         resolve(null);
-//       }
-//     }, refetchInterval);
-//   });
-// };
 
 const Sale = () => {
-  const wallet = useTonWallet();
-  const [tonConnectUi] = useTonConnectUI();
-  const [msgHash, setMsgHash] = useState("");
-  const [loading, setLoading] = useState(false);
-  const { client } = useTonClient();
-  const [finalizedTx, setFinalizedTx] = useState(null);
-
-  
-
+  const oneJettonPrice = import.meta.env.VITE_JETTON_PRICE;
+  const minForwardAmount = import.meta.env.VITE_FORWARD_FEE;
   return (
-    <div>
-      <h1 className="text-center mt-8 text-3xl font-semibold h-24 ">
-        Welcome to the Sales Page
+    <div className="container mx-auto p-4 lg:w-1/2 md:w-2/3 sm:w-full">
+      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8 text-center my-8">
+        Sale Page
       </h1>
-
+      <div className="mb-8 space-y-4">
+        <p className="text-base sm:text-lg md:text-xl text-gray-700 text-justify">
+          On this page you can exchange <b>ton</b> tokens on <b>FFX jettons</b>.
+        </p>
+        <p className="text-base sm:text-lg md:text-xl text-gray-700 text-justify">
+          The price of 1 jetton - <b>{oneJettonPrice} ton</b>. You will also need to send a
+          minimal forward fees amount equal to - <b>{minForwardAmount} ton</b>, more about this   
+          <a
+            href="https://docs.ton.org/v3/documentation/smart-contracts/transaction-fees/fees"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:text-blue-500 px-2"
+          >
+            here.
+          </a>
+        </p>
+        <p className="text-base sm:text-lg md:text-xl text-gray-700 text-justify">
+          You can also send a comment with your purchase, so that admin will be able to read. Unlike a transaction comment that is recorded in the TON blockchain, this comment will be inserted in the database.  
+        </p>
+        <p className="text-base sm:text-lg md:text-xl text-gray-700 text-justify font-bold">
+          Don't spend more than you are ready to lose. 
+        </p>
+      </div>
       <JSalesInput />
     </div>
   );
