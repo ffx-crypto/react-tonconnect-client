@@ -22,11 +22,14 @@ export default function JSalesInput() {
   const { client } = useTonClient();
   const oneJettonPrice = import.meta.env.VITE_JETTON_PRICE;
   const minterAdminAddr = import.meta.env.VITE_MINTER_ADMIN_ADDRESS;
+  const fees = import.meta.env.VITE_FORWARD_FEE;
   const wallet = useTonWallet();
   const [tonConnectUi] = useTonConnectUI();
+  console.log('ffess ', typeof fees);
 
+  // CALCULATE TON AMOUNT
   useEffect(() => {
-    const totalPrice = jettonAmount * oneJettonPrice;
+    const totalPrice = (jettonAmount * oneJettonPrice) + parseFloat(fees);
     setJettonPrice(parseFloat(totalPrice.toFixed(3)).toString());
     const isBtnDisabled = jettonAmount == 0 || comment.length > 232;
     setBtnDisabled(isBtnDisabled);
