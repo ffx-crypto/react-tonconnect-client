@@ -1,70 +1,45 @@
-# Getting Started with Create React App
+# React-tonconnect-client 
+This is a client-side application for FFX Crypto project. The main function of this app is to implement simple ICO - users send **ton** and recieve corresponding **jetton** amount. The project is based on the [allen-hsu/demo-waitin-tx](https://github.com/allen-hsu/demo-waiting-tx) app.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description 
+After connecting ton wallet with the help of [@tonconnect/ui-react sdk](https://github.com/ton-connect/sdk/tree/main/packages/ui-react) user can send a *comment* and proper amount of **ton**. The comment will be recieved by the [back-end server](https://github.com/ffx-crypto/express-ton-server), that will send mint message to the **jetton admin** so that user corresponding amount of **ffx jettons**. 
 
-## Available Scripts
+## Project structure 
+- `src` - source code
+    - `components` - functional React elements
+    - `hooks` - functions to connect to user's wallet and send transaction to the blockchain
+    - `pages` - Home, Sale and Contact pages
+- `dist` - compiled code 
 
-In the project directory, you can run:
+## Example .env file
+```
+VITE_MANIFEST_URL=https://ffxcrypto.vercel.app/tonconnect-manifest.json
+https://ton-connect.github.io/demo-dapp-with-react-ui/tonconnect-manifest.json
+VITE_MINTER_ADMIN_ADDRESS=EQC_wf-PEh2nC6Ltn-hCkV-KXDKqJZcqbkZIxco-eU1fdmGv
+VITE_JETTON_PRICE=0.005
+VITE_API_BASE_URL=http://localhost:3000/api
+VITE_FORWARD_FEE=0.08
+```
 
-### `npm start`
+## Usage
+```sh
+# command to install dependencies 
+npm install 
+# command to run application 
+npm start 
+# build app for production 
+npm run build 
+```
+## Contributing 
+I will be happy for your interest in the project. Contributions are required and welcomed.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## ToDo List: 
+- *health check* - application should request the server before activating **JSalesInput** component 
+- *support for NFT* - currently there is only jetton on the **Sale** page, but in the future NFTs will appear as well
+- support for *TMA* ([telegram mini app](https://docs.ton.org/v3/guidelines/dapps/tma/overview)) - application will have a version for **telegram** or wallets like **tonkeeper** - when application is opened on a mobile device it should redirect user to the telegram/tonkeeper (?)
+- *testing* and *improvements* - there are no unit or end2end tests for the application, also i will be happy to proposed improvemens or corrections
+- *theming* - currently application has only light theme, it should also have a *dark* one with possibility to switch between them
+- *localization (L10n)* - the project needs texts and translations
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## LICENSE 
+[LICENSE](./LICENSE)
