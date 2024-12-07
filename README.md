@@ -36,7 +36,7 @@ I will be happy for your interest in the project. Contributions are required and
 ## ToDo List: 
 - *health check* - application should request the server before activating **JSalesInput** component 
 - *support for NFT* - currently there is only jetton on the **Sale** page, but in the future NFTs will appear as well
-- support for *TMA* ([telegram mini app](https://docs.ton.org/v3/guidelines/dapps/tma/overview)) - application will have a version for **telegram** or wallets like **tonkeeper** 
+- support for *TMA* ([telegram mini app](https://docs.ton.org/v3/guidelines/dapps/tma/overview)) - application will have a version for **telegram** or wallets like **tonkeeper** - when application is opened on a mobile device it should redirect user to the telegram/tonkeeper (?)
 - *testing* and *improvements* - there are no unit or end2end tests for the application, also i will be happy to proposed improvemens or corrections
 - *theming* - currently application has only light theme, it should also have a *dark* one with possibility to switch between them
 - *localization (L10n)* - the project needs texts and translations
