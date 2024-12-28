@@ -1,6 +1,6 @@
 {
   "name": "my-ton-connect",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@orbs-network/ton-access": "^2.3.3",
