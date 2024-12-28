@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import JSalesInput from "../components/JSalesInput/JSalesInput";
 import { MdWarning } from "react-icons/md";
+import { LiaTelegram } from "react-icons/lia";
 
 const Sale = () => {
   const oneJettonPrice = import.meta.env.VITE_JETTON_PRICE;
@@ -41,13 +42,20 @@ const Sale = () => {
             />
             <span className="uppercase font-bold">Caution</span>
           </div>
-          <p>Currently only the desktop version works.</p>
-          <p>Don't spend on crypto more than you are ready to lose.</p>
-          <p><b>navigator.userAgent:</b> {navigator.userAgent}</p>
-          <p><b>window.location.search:</b> {window.location.search}</p>
-          <p><a href={"https://t.me/ffx_ton_bot"} target="_blank"
-                rel="noopener noreferrer">t.me/@ffx_ton_bot</a></p>
-          <p>window.Telegram.WebApp {window.Telegram.WebApp}</p>
+          <p>
+            Comments can't be sent from <b>mobile browsers</b>.
+          </p>
+          <p>
+            On your mobile device open application in the telegram or ton wallet (tonkeeper):   
+            <a
+              href={"https://t.me/ffx_ton_bot"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-blue-400 inline"
+            >
+              <LiaTelegram style={{ marginLeft: "8px", fontSize: "24px", display: "inline" }} />@ffx_ton_bot 
+            </a>
+          </p>
         </div>
       </div>
       <JSalesInput />
