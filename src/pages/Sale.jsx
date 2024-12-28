@@ -43,8 +43,8 @@ const Sale = () => {
           </div>
           <p>Currently only the desktop version works.</p>
           <p>Don't spend on crypto more than you are ready to lose.</p>
-          <p>navigator.userAgent: {navigator.userAgent}</p>
-          <p>window.location.search: {window.location.search}</p>
+          <p><b>navigator.userAgent:</b> {navigator.userAgent}</p>
+          <p><b>window.location.search:</b> {window.location.search}</p>
         </div>
       </div>
       <JSalesInput />
