@@ -16,7 +16,7 @@ const Sale = () => {
           On this page you can exchange <b>ton</b> tokens on <b>FFX jettons</b>.
         </p>
         <p className="text-base sm:text-lg md:text-xl text-gray-700 text-justify">
-          The price of 1 jetton - <b>{oneJettonPrice} ton</b>. You will also
+          The price of <b>1 nanojetton</b> - <b>{oneJettonPrice} nanoton</b>. You will also
           need to send a minimal forward fees amount equal to -{" "}
           <b>{minForwardAmount} ton</b>, more about this
           <a
@@ -33,30 +33,7 @@ const Sale = () => {
           able to read. Unlike a transaction comment that is recorded in the TON
           blockchain, this comment will be inserted in the database.
         </p>
-        {/* WARNING */}
-        <div className="flex flex-col text-base sm:text-lg md:text-xl text-gray-700 text-justify  bg-amber-100 p-8 rounded-lg border-l-orange-300 border-l-4 shadow-md">
-          <div className="flex">
-            <MdWarning
-              style={{ marginRight: "8px", height: "2rem", width: "2rem" }}
-              size={24}
-            />
-            <span className="uppercase font-bold">Caution</span>
-          </div>
-          <p>
-            Comments can't be sent from <b>mobile browsers</b>.
-          </p>
-          <p>
-            On your mobile device open application in the telegram or ton wallet (tonkeeper):   
-            <a
-              href={"https://t.me/ffx_ton_bot"}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-blue-400 inline"
-            >
-              <LiaTelegram style={{ marginLeft: "8px", fontSize: "24px", display: "inline" }} />@ffx_ton_bot 
-            </a>
-          </p>
-        </div>
+        
       </div>
       <JSalesInput />
       <div className="mb-8"></div>

@@ -6,9 +6,8 @@ import { useTonTransaction } from "../../hooks/useTonTransaction";
 
 export default function JSalesInput() {
   const [jettonAmount, setJettonAmount] = useState(0);
-  const [jettonPrice, setJettonPrice] = useState(0);
+  const [tonsToDisplay, settonsToDisplay] = useState(0);
   const [btnDisabled, setBtnDisabled] = useState(true);
-  const [comment, setComment] = useState("");
   const {
     sendTons,
     loading,
@@ -20,39 +19,30 @@ export default function JSalesInput() {
     setResponseMessage,
   } = useTonTransaction();
   const { client } = useTonClient();
-  const oneJettonPrice = import.meta.env.VITE_JETTON_PRICE;
+  const oneJettonPrice = import.meta.env.VITE_JETTON_PRICE; // 1 nanoJetton = 1 nanoton
   const minterAdminAddr = import.meta.env.VITE_MINTER_ADMIN_ADDRESS;
   const fees = import.meta.env.VITE_FORWARD_FEE;
   const wallet = useTonWallet();
   const [tonConnectUi] = useTonConnectUI();
-  console.log('ffess ', typeof fees);
 
   // CALCULATE TON AMOUNT
   useEffect(() => {
     const totalPrice = (jettonAmount * oneJettonPrice) + parseFloat(fees);
-    setJettonPrice(parseFloat(totalPrice.toFixed(3)).toString());
-    const isBtnDisabled = jettonAmount == 0 || comment.length > 232;
+    settonsToDisplay(parseFloat(totalPrice.toFixed(3)).toString());
+    const isBtnDisabled = jettonAmount == 0 || msgHash.length > 0 || responseError.length > 0;
     setBtnDisabled(isBtnDisabled);
-  }, [jettonAmount, comment]);
+    setResponseError("");
+  }, [jettonAmount]);
 
   useEffect(() => {
-    setComment("");
     setJettonAmount(0);
     setResponseMessage("");
     setResponseError("");
   }, [wallet]);
 
   const handleSendTons = async () => {
-    await sendTons(jettonPrice, client, comment);
+    await sendTons(jettonAmount, client);
     setJettonAmount(0);
-  };
-
-  const handleTextAreaChange = (e) => {
-    if (e.target.value.length <= 232) {
-      setComment(e.target.value);
-    } else {
-      setBtnDisabled(true);
-    }
   };
 
   return (
@@ -86,6 +76,7 @@ export default function JSalesInput() {
           onChange={(e) => setJettonAmount(parseFloat(e.target.value))}
           placeholder="Enter amount"
           min="0"
+          disabled={msgHash.length > 0 || responseError.length > 0}
         />
       </div>
 
@@ -105,7 +96,7 @@ export default function JSalesInput() {
           ) : (
             <>
               Send{" "}
-              <span className="text-yellow-300 font-bold">{jettonPrice}</span>{" "}
+              <span className="text-yellow-300 font-bold">{tonsToDisplay}</span>{" "}
               ton
             </>
           )}
@@ -141,13 +132,7 @@ export default function JSalesInput() {
         </>
       ) : (
         <>
-          <textarea
-            value={comment} // Bind the textarea value to state
-            onChange={handleTextAreaChange} // Update state on change
-            rows="4"
-            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400 mt-4"
-            placeholder="Type your message here..."
-          ></textarea>
+          
         </>
       )}
 
